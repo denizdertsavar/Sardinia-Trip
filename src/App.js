@@ -307,17 +307,26 @@ function DayCard({ day, isOpen, onToggle }) {
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                 {day.spots.map((s, i) => (
-                  <span key={i} title={s.note} style={{
-                    display: "inline-flex", alignItems: "center", gap: 5,
-                    fontSize: 12, padding: "5px 10px", borderRadius: 20,
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: C.primary, fontWeight: 400, cursor: "default",
-                  }}>
+                  <a
+                    key={i}
+                    title={s.note}
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.name + ' Sardinia')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="spot-link"
+                    style={{
+                      display: "inline-flex", alignItems: "center", gap: 5,
+                      fontSize: 12, padding: "5px 10px", borderRadius: 20,
+                      background: "rgba(255,255,255,0.05)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      color: C.primary, fontWeight: 400, cursor: "pointer",
+                      textDecoration: "none",
+                    }}
+                  >
                     <span style={{ fontSize: 13 }}>{spotIcons[s.type]}</span>
                     <span style={{ fontWeight: 500 }}>{s.name}</span>
                     <span style={{ color: C.tertiary, fontSize: 11 }}>— {s.note}</span>
-                  </span>
+                  </a>
                 ))}
               </div>
             </div>
@@ -503,6 +512,7 @@ export default function SardiniaItinerary() {
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+    .spot-link:hover { text-decoration: underline !important; border-color: rgba(255,255,255,0.18) !important; }
   `;
 
   if (isDesktop) {
