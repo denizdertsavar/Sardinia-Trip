@@ -542,12 +542,12 @@ export default function SardiniaItinerary() {
 
             {/* Avatars */}
             <div style={{ display: "flex", marginTop: 20 }}>
-              {["Y", "C", "E"].map((initial, i) => (
+              {["DD", "CR", "EC"].map((initial, i) => (
                 <div key={i} style={{
                   width: 30, height: 30, borderRadius: "50%",
                   background: [C.teal, C.terracotta, C.amber][i],
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 12, fontWeight: 600, color: "#fff",
+                  fontSize: 10, fontWeight: 600, color: "#fff",
                   border: "2px solid #12161f",
                   marginLeft: i > 0 ? -6 : 0, zIndex: 3 - i,
                 }}>
@@ -620,12 +620,12 @@ export default function SardiniaItinerary() {
             May 23 – 29, 2026
           </div>
           <div style={{ display: "flex" }}>
-            {["Y", "C", "E"].map((initial, i) => (
+            {["DD", "CR", "EC"].map((initial, i) => (
               <div key={i} style={{
                 width: 26, height: 26, borderRadius: "50%",
                 background: [C.teal, C.terracotta, C.amber][i],
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 11, fontWeight: 600, color: "#fff",
+                fontSize: 9, fontWeight: 600, color: "#fff",
                 border: "2px solid #1a1f2e",
                 marginLeft: i > 0 ? -6 : 0, zIndex: 3 - i,
               }}>
