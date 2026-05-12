@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Polyline, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 /* ───────────────────── DATA (unchanged) ───────────────────── */
 const DAYS = [
@@ -177,6 +180,17 @@ const CHECKLIST = [
 ];
 
 const spotIcons = { eat: "🍽️", drink: "🥂", coffee: "☕" };
+
+const MAP_STOPS = [
+  { num: 1, name: "Alghero", coords: [40.5584, 8.3200], date: "May 23", title: "Alghero - Arrival", summary: "Evening arrival, settle in, first taste of Sardinia" },
+  { num: 2, name: "Olbia", coords: [40.9163, 9.5236], date: "May 24", title: "Alghero to Olbia to Santa Teresa", summary: "Morning exploring, scenic drive east, meet Carlo" },
+  { num: 3, name: "Santa Teresa Gallura", coords: [41.2367, 9.1894], date: "May 24-28", title: "Santa Teresa Gallura - Base", summary: "Your base for 5 nights in northern Sardinia" },
+  { num: 4, name: "Capo Testa", coords: [41.2333, 9.1500], date: "May 25", title: "Capo Testa", summary: "Lunar granite headland - Cala Spinosa, Corsica visible across the strait" },
+  { num: 5, name: "Porto Pollo, Palau", coords: [41.1833, 9.3333], date: "May 26", title: "Porto Pollo", summary: "One of Europe's top kite and windsurf spots - venturi effect, 15-25 knots" },
+  { num: 6, name: "La Maddalena", coords: [41.2167, 9.4000], date: "May 26", title: "La Maddalena", summary: "Island-hopping, Cala Coticcio (Tahiti beach), boat tours to Spargi and Budelli" },
+  { num: 7, name: "Bonifacio", coords: [41.3872, 9.1597], date: "May 27", title: "Bonifacio, Corsica", summary: "50-minute ferry to the Mediterranean's most dramatic cliff city" },
+  { num: 8, name: "Castelsardo", coords: [40.9167, 8.7167], date: "May 28", title: "Castelsardo", summary: "Medieval hill town on a rock above the sea, castle, basket-weaving" },
+];
 
 /* ───────────────────── DARK THEME ───────────────────── */
 const C = {
@@ -443,6 +457,71 @@ function CheckItem({ item, checked, onToggle }) {
   );
 }
 
+/* ───────────────────── MAP ───────────────────── */
+
+function createNumberedIcon(num) {
+  return L.divIcon({
+    className: 'numbered-marker',
+    html: `<div style="width:28px;height:28px;border-radius:50%;background:#1a1f2e;border:2px solid #5CB8B2;text-align:center;line-height:24px;font-size:11px;font-weight:700;color:#5CB8B2;">${num}</div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
+    popupAnchor: [0, -16],
+  });
+}
+
+function StopPopup({ stop }) {
+  return (
+    <div style={{ fontFamily: "Inter, 'Helvetica Neue', sans-serif", minWidth: 160, maxWidth: 200 }}>
+      <div style={{ fontSize: 10, color: "#888", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 2 }}>
+        {stop.date}
+      </div>
+      <div style={{ fontWeight: 700, fontSize: 14, color: "#222", marginBottom: 4, lineHeight: 1.3 }}>
+        {stop.title}
+      </div>
+      <div style={{ fontSize: 12, color: "#555", lineHeight: 1.5 }}>
+        {stop.summary}
+      </div>
+    </div>
+  );
+}
+
+function MapView({ isDesktop }) {
+  return (
+    <div style={{
+      height: isDesktop ? "calc(100vh - 128px)" : 500,
+      minHeight: 500,
+      borderRadius: 8,
+      overflow: "hidden",
+      animation: "fadeIn 0.2s ease",
+    }}>
+      <MapContainer
+        bounds={MAP_STOPS.map(s => s.coords)}
+        boundsOptions={{ padding: [40, 40] }}
+        style={{ height: "100%", width: "100%" }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <Polyline
+          positions={MAP_STOPS.map(s => s.coords)}
+          color="#5CB8B2"
+          opacity={0.6}
+          weight={3}
+          dashArray="8, 5"
+        />
+        {MAP_STOPS.map(stop => (
+          <Marker key={stop.num} position={stop.coords} icon={createNumberedIcon(stop.num)}>
+            <Popup>
+              <StopPopup stop={stop} />
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    </div>
+  );
+}
+
 /* ───────────────────── MAIN ───────────────────── */
 
 export default function SardiniaItinerary() {
@@ -462,6 +541,7 @@ export default function SardiniaItinerary() {
 
   const tabs = [
     { key: "itinerary", label: "Day by Day", icon: "📅" },
+    { key: "map", label: "Map", icon: "📍" },
     { key: "essentials", label: "Don't Miss", icon: "⭐" },
     { key: "checklist", label: "To Book", icon: "📌" },
   ];
@@ -476,6 +556,9 @@ export default function SardiniaItinerary() {
           ))}
         </div>
       );
+    }
+    if (activeTab === "map") {
+      return <MapView isDesktop={isDesktop} />;
     }
     if (activeTab === "essentials") {
       return (
@@ -513,6 +596,9 @@ export default function SardiniaItinerary() {
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
     .spot-link:hover { text-decoration: underline !important; border-color: rgba(255,255,255,0.18) !important; }
+    .numbered-marker { background: none !important; border: none !important; box-shadow: none !important; }
+    .leaflet-popup-content { margin: 10px 14px; }
+    .leaflet-popup-content-wrapper { border-radius: 8px; }
   `;
 
   if (isDesktop) {
