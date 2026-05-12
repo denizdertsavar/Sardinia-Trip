@@ -41,7 +41,7 @@ const DAYS = [
       { type: "drink", name: "Piazza Matteotti bars", note: "Olbia — aperitivo while waiting" },
     ],
     logistics: "Pick up rental car Alghero morning. Alghero → Olbia ~1h45. Olbia → Santa Teresa ~1h.",
-    bookAhead: "Rental car: one-way Alghero → Olbia Airport",
+    bookAhead: "Bus: Alghero Airport to city centre, then intercity bus or shuttle to Olbia",
     overnightAt: "Santa Teresa Gallura",
   },
   {
@@ -168,7 +168,7 @@ const DONT_MISS = [
 ];
 
 const CHECKLIST = [
-  { text: "Rental car — one-way Alghero → Olbia Airport, May 24 morning", urgent: true },
+  { text: "Bus or shuttle: Alghero Airport to Olbia, May 24 — check ARST or FlixBus routes", urgent: true },
   { text: "Ferry tickets — Santa Teresa ↔ Bonifacio, May 27", urgent: true },
   { text: "PeMa restaurant — dinner May 25", urgent: false },
   { text: "Agriturismo Il Muto di Gallura — lunch May 28, call day before", urgent: false },
