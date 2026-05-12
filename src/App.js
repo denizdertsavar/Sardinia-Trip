@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 const DAYS = [
   {
     date: "May 23",
-    weekday: "Fri",
+    weekday: "Sat",
     title: "Alghero — Arrival",
     tag: "Solo",
     tagColor: "teal",
@@ -24,7 +24,7 @@ const DAYS = [
   },
   {
     date: "May 24",
-    weekday: "Sat",
+    weekday: "Sun",
     title: "Alghero → Olbia → Santa Teresa",
     tag: "Travel Day",
     tagColor: "terracotta",
@@ -46,7 +46,7 @@ const DAYS = [
   },
   {
     date: "May 25",
-    weekday: "Sun",
+    weekday: "Mon",
     title: "Capo Testa + Pick Up Elli",
     tag: "With Carlo",
     tagColor: "teal",
@@ -70,7 +70,7 @@ const DAYS = [
   },
   {
     date: "May 26",
-    weekday: "Mon",
+    weekday: "Tue",
     title: "Porto Pollo + La Maddalena",
     tag: "Full Group",
     tagColor: "terracotta",
@@ -93,7 +93,7 @@ const DAYS = [
   },
   {
     date: "May 27",
-    weekday: "Tue",
+    weekday: "Wed",
     title: "Bonifacio, Corsica",
     tag: "Day Trip",
     tagColor: "teal",
@@ -116,7 +116,7 @@ const DAYS = [
   },
   {
     date: "May 28",
-    weekday: "Wed",
+    weekday: "Thu",
     title: "Interior & Wine Country",
     tag: "Last Full Day",
     tagColor: "terracotta",
@@ -140,7 +140,7 @@ const DAYS = [
   },
   {
     date: "May 29",
-    weekday: "Thu",
+    weekday: "Fri",
     title: "Departure — Olbia",
     tag: "Travel Day",
     tagColor: "terracotta",
