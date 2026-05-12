@@ -470,8 +470,22 @@ function createNumberedIcon(num) {
 }
 
 function StopPopup({ stop }) {
+  const [imgSrc, setImgSrc] = useState(null);
+
+  useEffect(() => {
+    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(stop.name)}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.thumbnail?.source) setImgSrc(data.thumbnail.source);
+      })
+      .catch(() => {});
+  }, [stop.name]);
+
   return (
     <div style={{ fontFamily: "Inter, 'Helvetica Neue', sans-serif", minWidth: 160, maxWidth: 200 }}>
+      {imgSrc && (
+        <img src={imgSrc} alt={stop.name} style={{ width: "100%", borderRadius: 4, marginBottom: 6, display: "block" }} />
+      )}
       <div style={{ fontSize: 10, color: "#888", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 2 }}>
         {stop.date}
       </div>
